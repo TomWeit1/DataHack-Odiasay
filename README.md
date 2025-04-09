@@ -3,7 +3,7 @@ Forked from [mriganv/Machine-Learning-Model-for-Solar-Energy-Forecast](https://g
 
 ## About
 
-This is a data science project about developing a machine learning regression model to accurately predict the rate of solar output measured as a % of baseline of capacity.
+This is a data science project about developing a machine learning regression model to accurately predict the rate of solar output measured as power realtive to a baseline of capacity.
 The project was presented during April 2025 [DataHack](https://datahack.org.il/) @ [Odiasay](https://www.madaney.net/odyssey) hackaton.
 
 ## Data Collection
@@ -15,9 +15,11 @@ The model is trained using real data obtained from three sources
 
 ## Relative Power Distribution
 Relative power average and standard deviation for each hour of the day in the dataset.
+
 ![power_hourly](output/relative_power_by_hour.png)
 
 Average weekly relative power distribution.
+
 ![power_weekly](output/avg_relative_power_by_week.png)
 
 ## Physical Model   
@@ -29,17 +31,19 @@ The irradiance data is used to calculate the power output of a solar panel.
 
 Key terms:
 * [Global Horizontal Irradiance](https://pvpmc.sandia.gov/modeling-guide/1-weather-design-inputs/irradiance-insolation/global-horizontal-irradiance/) (GHI) - The total amount of shortwave radiation received from above by a surface horizontal to the ground.
-  - GHI may be calculated from direct normal irradiance (DNI) and diffuse horizontal irradiance (DHI) using the following equation:
+  GHI may be calculated from direct normal irradiance (DNI) and diffuse horizontal irradiance (DHI) using the following equation:
   
   $$GHI = DNI \cdot \cos(\theta_Z) + DHI$$
-* [Plane of Array](https://pvpmc.sandia.gov/modeling-guide/1-weather-design-inputs/plane-of-array-poa-irradiance/) (POA) Irradiance - The amount of solar radiation received by a photovoltaic panel, taking into account the angle of the sun relative to the panel and the angle of the panel relative to the ground.
-  - Mathematically POA irradiance, $E_{POA}$, is:
   
-    $$E_{POA} = E_b + E_g + E_d$$
-   
-    where $E_b$ is the POA beam component, 
-    $E_g$ is the POA ground-reflected component, and 
-    $E_d$ is the POA sky-diffuse component.
+* [Plane of Array](https://pvpmc.sandia.gov/modeling-guide/1-weather-design-inputs/plane-of-array-poa-irradiance/) (POA) Irradiance - The amount of solar radiation received by a photovoltaic panel, taking into account the angle of the sun relative to the panel and the angle of the panel relative to the ground.
+  Mathematically POA irradiance, $E_{POA}$, is:
+  
+  $$E_{POA} = E_b + E_g + E_d$$
+ 
+  where $E_b$ is the POA beam component, 
+  $E_g$ is the POA ground-reflected component, and 
+  $E_d$ is the POA sky-diffuse component.
+
 
 * [Point-value models](https://pvpmc.sandia.gov/modeling-guide/2-dc-module-iv/point-value-models/pvwatts/) -
 These types of models are designed to predict a point (usually the maximum power point ($P_{mp}$) on the IV curve
