@@ -40,3 +40,9 @@ Key terms:
     where $E_b$ is the POA beam component, 
     $E_g$ is the POA ground-reflected component, and 
     $E_d$ is the POA sky-diffuse component.
+
+* [Point-value models](https://pvpmc.sandia.gov/modeling-guide/2-dc-module-iv/point-value-models/pvwatts/) -
+These types of models are designed to predict a point (usually the maximum power point ($P_{mp}$) on the IV curve
+as a function of environmental variables (e.g., irradiance, cell temperature, and spectral content, for example).
+  - [PVWatts](https://pvpmc.sandia.gov/modeling-guide/2-dc-module-iv/point-value-models/pvwatts/) - 
+A point-value model developed by the National Renewable Energy Laboratory (NREL) that estimates the energy production of grid-connected photovoltaic systems.
