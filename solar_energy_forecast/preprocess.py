@@ -1,8 +1,7 @@
 import glob
 
 import pandas as pd
-
-
+import numpy as np
 def get_data(verbose: bool = False) -> pd.DataFrame:
     df_pv = get_pv_data(verbose)
     df_solar = get_solar_data(verbose)
@@ -18,15 +17,17 @@ def get_weather_data(verbose: bool = False) -> pd.DataFrame:
     df_weather = pd.read_csv("data/world_weather_online.csv")
     df_weather['date_time'] = pd.to_datetime(df_weather['date_time'])
     df_weather.set_index('date_time', inplace=True)
-    for col in ['sunrise', 'sunfall', 'moonrise', 'moonfall']:
-    df_weather[col] = pd.to_datetime(df_weather[col], format='%I:%M %p')
+    
+    #for col in ['sunrise', 'sunset', 'moonrise', 'moonset']:  # note: might be 'moonset' instead of 'moonfall'
+    #    df_weather[col] = pd.to_datetime(df_weather[col], format='%I:%M %p', errors='coerce')
 
 # Calculate sun time in hours
-    df_weather['sun_time'] = (df_weather['sunfall'] - df_weather['sunrise']).dt.total_seconds() / 3600
+    #df_weather['sun_time'] = (df_weather['sunset'] - df_weather['sunrise']).dt.total_seconds() / 3600
 
-# Calculate moon time, accounting for moonfall next day
-    df_weather['moon_time'] = (df_weather['moonfall'] - df_weather['moonrise']).dt.total_seconds() / 3600
-    df_weather.loc[df_weather['moon_time'] < 0, 'moon_time'] += 24
+# Calculate moon time in hours, handling next-day moonset
+    #df_weather['moon_time'] = (df_weather['moonset'] - df_weather['moonrise']).dt.total_seconds() / 3600
+    #df_weather.loc[df_weather['moon_time'] < 0, 'moon_time'] += 24  # wrap around midnight
+
     df_weather.drop(columns=['moonrise', 'moonset', 'sunrise', 'sunset', 'location'], inplace =True)
     if verbose:
         print("\n## Weather data:")
@@ -36,6 +37,11 @@ def get_weather_data(verbose: bool = False) -> pd.DataFrame:
 
 def get_solar_data(verbose: bool = False) -> pd.DataFrame:
     df_solar = pd.concat([pd.read_csv(f) for f in glob.glob("data/nrel_solar_irradiance/*.csv")], ignore_index=True)
+    df_solar['fractional_time'] = df_solar['Hour'] + df_solar['Minute'] / 60.0
+
+# Create sine and cosine representations for capturing daily cycles
+    df_solar['sin_time'] = np.sin(2 * np.pi * df_solar['fractional_time'] / 24)
+    df_solar['cos_time'] = np.cos(2 * np.pi * df_solar['fractional_time'] / 24)
     df_solar['date_time'] = pd.to_datetime(df_solar[['Year', 'Month', 'Day', 'Hour', 'Minute']])
     df_solar.drop(columns=['Year', 'Month', 'Day', 'Hour', 'Minute'], inplace=True)
     df_solar = df_solar.set_index('date_time').sort_index()
