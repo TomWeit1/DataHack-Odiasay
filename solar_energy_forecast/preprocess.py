@@ -1,7 +1,7 @@
 import glob
-
 import pandas as pd
 import numpy as np
+
 def get_data(verbose: bool = False) -> pd.DataFrame:
     df_pv = get_pv_data(verbose)
     df_solar = get_solar_data(verbose)
