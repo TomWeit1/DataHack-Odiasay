@@ -18,6 +18,16 @@ def get_weather_data(verbose: bool = False) -> pd.DataFrame:
     df_weather = pd.read_csv("data/world_weather_online.csv")
     df_weather['date_time'] = pd.to_datetime(df_weather['date_time'])
     df_weather.set_index('date_time', inplace=True)
+    for col in ['sunrise', 'sunfall', 'moonrise', 'moonfall']:
+    df_weather[col] = pd.to_datetime(df_weather[col], format='%I:%M %p')
+
+# Calculate sun time in hours
+    df_weather['sun_time'] = (df_weather['sunfall'] - df_weather['sunrise']).dt.total_seconds() / 3600
+
+# Calculate moon time, accounting for moonfall next day
+    df_weather['moon_time'] = (df_weather['moonfall'] - df_weather['moonrise']).dt.total_seconds() / 3600
+    df_weather.loc[df_weather['moon_time'] < 0, 'moon_time'] += 24
+    df_weather.drop(columns=['moonrise', 'moonset', 'sunrise', 'sunset', 'location'], inplace =True)
     if verbose:
         print("\n## Weather data:")
         print(round(df_weather.describe(percentiles=[0.5]).transpose(), 2))
