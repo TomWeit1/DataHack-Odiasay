@@ -45,6 +45,7 @@ def main():
     plt.savefig('output/Tree.png')
     plt.clf()
 
+
     # Print metrics
     print(f'R² Score: {r2_score(y_test, y_pred):.3f}')
     print(f'Mean Squared Error: {mean_squared_error(y_test, y_pred):.3f}')
