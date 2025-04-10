@@ -9,10 +9,10 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 from solar_energy_forecast.preprocess import get_data
 
-import tensorflow as tf
+"""import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler"""
 
 def main():
     df = get_data(verbose=True)
@@ -55,7 +55,7 @@ def main():
     print(f'Mean Squared Error: {mean_squared_error(y_test, y_pred):.3f}')
     print(f'mean_absolute_error: {mean_absolute_error(y_test, y_pred):.3f}')
 
-    # Set your target column
+    """# Set your target column
     target_col = 'relative_power'  # replace this with your actual column
 
     # Prepare features and target
@@ -160,7 +160,7 @@ def main():
 
     # Print metrics
     print(f'R² Score: {r2_score(y_test, y_pred):.3f}')
-    print(f'Mean Squared Error: {mean_squared_error(y_test, y_pred):.3f}')
+    print(f'Mean Squared Error: {mean_squared_error(y_test, y_pred):.3f}')"""
 
 if __name__ == "__main__":
     pd.set_option('display.max_columns', None)

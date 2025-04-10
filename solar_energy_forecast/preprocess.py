@@ -43,13 +43,13 @@ def get_solar_data(verbose: bool = False) -> pd.DataFrame:
 # Create sine and cosine representations for capturing daily cycles
     df_solar['sin_time'] = np.sin(2 * np.pi * df_solar['fractional_time'] / 24)
     df_solar['cos_time'] = np.cos(2 * np.pi * df_solar['fractional_time'] / 24)
-    df_solar['clear_sky_index_GHI'] = df_solar['GHI'] / df_solar['Clearsky GHI'].replace(0, np.nan)
-    df_solar['clear_sky_index_GHI'].fillna(0, inplace=True)
+    #df_solar['clear_sky_index_GHI'] = df_solar['GHI'] / df_solar['Clearsky GHI'].replace(0, np.nan)
+    #df_solar['clear_sky_index_GHI'].fillna(0, inplace=True)
 
 # 4. Irradiance Loss Ratio:
 # Proportion of lost irradiance relative to the clear-sky condition
-    df_solar['irradiance_loss_ratio'] = (df_solar['Clearsky GHI'] - df_solar['GHI']) / df_solar['Clearsky GHI'].replace(0, np.nan)
-    df_solar['irradiance_loss_ratio'].fillna(0, inplace=True)
+    #df_solar['irradiance_loss_ratio'] = (df_solar['Clearsky GHI'] - df_solar['GHI']) / df_solar['Clearsky GHI'].replace(0, np.nan)
+    #df_solar['irradiance_loss_ratio'].fillna(0, inplace=True)
     df_solar['date_time'] = pd.to_datetime(df_solar[['Year', 'Month', 'Day', 'Hour', 'Minute']])
     df_solar.drop(columns=['Year', 'Month', 'Day', 'Hour', 'Minute'], inplace=True)
     df_solar = df_solar.set_index('date_time').sort_index()
